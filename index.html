@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0b0f19">
     <meta name="description" content="巨星俱乐部 - 专业币圈社区，提供高胜率策略和实时行情分析">
     <title>巨星俱乐部 - 专业币圈社区</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,74 +13,367 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: {DEFAULT: '#fff', light: '#f8f9fa'},
-                        accent: {DEFAULT: '#3b82f6', gold: '#f59e0b', orange: '#e67e22'},
-                        dark: '#1f2937', light: '#f8f9fa'
+                        primary: {DEFAULT: '#161b29', light: '#1f293f'},
+                        accent: {
+                            DEFAULT: '#0ea5e9', 
+                            gold: '#f59e0b', 
+                            orange: '#f97316',
+                            neon: '#22d3ee',
+                            purple: '#a855f7',
+                            green: '#10b981'
+                        },
+                        dark: '#0b0f19', 
+                        light: '#e2e8f0'
                     },
-                    fontFamily: {sans: ['Inter', 'sans-serif']}
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        crypto: ['Space Grotesk', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon': '0 0 5px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3)',
+                        'neon-purple': '0 0 5px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3)',
+                        'neon-green': '0 0 5px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)'
+                    }
                 }
             }
         }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
         html{scroll-behavior:smooth}
-        body{font-family:'Inter',sans-serif;background:#fff;color:#1f2937}
-        .btn{font-weight:600;color:#fff;transition:background .2s;min-height:44px;min-width:44px}
-        .btn-primary{background:#3b82f6}
-        .btn-primary:active{background:#2563eb}
-        .btn-secondary{background:#f59e0b}
-        .btn-secondary:active{background:#d97706}
-        .btn-backup{background:#10b981}
-        .btn-backup:active{background:#059669}
-        .btn-official{background:#6366f1}
-        .btn-official:active{background:#4f46e5}
-        .nav-link{position:relative}
-        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#3b82f6;transition:width .2s}
-        .nav-link:hover::after{width:100%}
-        .section-title{position:relative;display:inline-block;margin-bottom:1.5rem}
-        .section-title::after{content:'';position:absolute;bottom:-8px;left:0;width:50px;height:2px;background:#3b82f6}
-        .card{background:#fff;border:1px solid #e5e7eb}
-        .id-card{background:#f8f9fa;border-left:3px solid #3b82f6}
-        .service-icon{background:#eff6ff;color:#3b82f6}
-        .copy-btn{transition:all .2s}
-        .copy-btn:active{background:#e5e7eb}
-        .copy-btn.copied{background:#d1fae5;color:#065f46}
-        .copy-toast{animation:fadeInOut 2s ease forwards}
-        @keyframes fadeInOut{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
-        .important-notice{position:relative;overflow:hidden}
-        .important-notice::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#3b82f6,#f59e0b,#3b82f6)}
-        .hero-bg{background:#f0f9ff;position:relative}
-        .service-card{transition:all .2s}
-        .service-card:active{transform:translateY(-2px);box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}
-        .download-buttons{display:flex;flex-direction:column;gap:6px}
+        body{
+            font-family:'Inter',sans-serif;
+            background: linear-gradient(135deg, #0b0f19 0%, #161b29 100%);
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 25% 5%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 75% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        
+        /* 加密风格纹理 */
+        .crypto-pattern {
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(34, 211, 238, 0.03) 0px, rgba(34, 211, 238, 0.03) 1px, transparent 1px, transparent 10px);
+            background-size: 20px 20px;
+        }
+        
+        /* 按钮样式 */
+        .btn{
+            font-weight:600;
+            color:#fff;
+            transition:all .3s;
+            min-height:44px;
+            min-width:44px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary{
+            background: linear-gradient(90deg, #0284c7, #0ea5e9);
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+        }
+        
+        .btn-primary:hover{
+            background: linear-gradient(90deg, #0369a1, #0284c7);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+        }
+        
+        .btn-primary:active{
+            background: linear-gradient(90deg, #075985, #0369a1);
+        }
+        
+        .btn-secondary{
+            background: linear-gradient(90deg, #ea580c, #f97316);
+            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+        }
+        
+        .btn-secondary:hover{
+            background: linear-gradient(90deg, #c2410c, #ea580c);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+        }
+        
+        .btn-secondary:active{
+            background: linear-gradient(90deg, #9a3412, #c2410c);
+        }
+        
+        .btn-backup{
+            background: linear-gradient(90deg, #059669, #10b981);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-backup:hover{
+            background: linear-gradient(90deg, #047857, #059669);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+        
+        .btn-backup:active{
+            background: linear-gradient(90deg, #065f46, #047857);
+        }
+        
+        .btn-official{
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3);
+        }
+        
+        .btn-official:hover{
+            background: linear-gradient(90deg, #6d28d9, #7c3aed);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+        
+        .btn-official:active{
+            background: linear-gradient(90deg, #5b21b6, #6d28d9);
+        }
+        
+        /* 导航链接 */
+        .nav-link{
+            position:relative;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .nav-link::after{
+            content:'';
+            position:absolute;
+            bottom:-5px;
+            left:0;
+            width:0;
+            height:2px;
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            transition:width .3s;
+            box-shadow: 0 0 5px rgba(34, 211, 238, 0.5);
+        }
+        
+        .nav-link:hover::after{
+            width:100%
+        }
+        
+        /* 标题样式 */
+        .section-title{
+            position:relative;
+            display:inline-block;
+            margin-bottom:1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        
+        .section-title::after{
+            content:'';
+            position:absolute;
+            bottom:-8px;
+            left:0;
+            width:50px;
+            height:2px;
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            box-shadow: 0 0 5px rgba(34, 211, 238, 0.5);
+        }
+        
+        /* 卡片样式 */
+        .card{
+            background: rgba(22, 27, 41, 0.8);
+            border: 1px solid rgba(14, 165, 233, 0.1);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .id-card{
+            background: rgba(25, 32, 48, 0.9);
+            border-left:3px solid #0ea5e9;
+            border-radius: 8px;
+        }
+        
+        /* 服务图标 */
+        .service-icon{
+            background: rgba(14, 165, 233, 0.1);
+            color:#0ea5e9;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            background: rgba(14, 165, 233, 0.2);
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+        }
+        
+        /* 复制按钮 */
+        .copy-btn{
+            transition:all .3s;
+            background: rgba(25, 32, 48, 0.8);
+            border: 1px solid rgba(14, 165, 233, 0.1);
+        }
+        
+        .copy-btn:hover{
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+        
+        .copy-btn:active{
+            background: rgba(14, 165, 233, 0.2);
+        }
+        
+        .copy-btn.copied{
+            background: rgba(16, 185, 129, 0.2);
+            color:#10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        /* 提示动画 */
+        .copy-toast{
+            animation:fadeInOut 2s ease forwards;
+            background: rgba(16, 185, 129, 0.9) !important;
+            backdrop-filter: blur(4px);
+        }
+        
+        @keyframes fadeInOut{
+            0%{opacity:0; transform: translateY(10px);}
+            20%{opacity:1; transform: translateY(0);}
+            80%{opacity:1; transform: translateY(0);}
+            100%{opacity:0; transform: translateY(10px);}
+        }
+        
+        /* 重要通知 */
+        .important-notice{
+            position:relative;
+            overflow:hidden;
+        }
+        
+        .important-notice::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:4px;
+            background:linear-gradient(90deg,#0ea5e9,#f97316,#0ea5e9);
+        }
+        
+        /* 英雄区背景 */
+        .hero-bg{
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position:relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%);
+            z-index: 0;
+        }
+        
+        /* 服务卡片 */
+        .service-card{
+            transition:all .3s;
+        }
+        
+        .service-card:hover{
+            transform:translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(14, 165, 233, 0.4);
+        }
+        
+        .service-card:active{
+            transform:translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 下载按钮容器 */
+        .download-buttons{
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+        
+        /* 返回顶部按钮 */
+        #back-to-top {
+            background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        #back-to-top:hover {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        /* 响应式调整 */
         @media (max-width:640px){
             .btn{padding:.5rem !important;font-size:15px !important}
             p,li{font-size:15px}
+            .section-title {
+                font-size: 1.8rem !important;
+            }
+        }
+        
+        /* 霓虹文字效果 */
+        .neon-text {
+            background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        
+        /* 分割线 */
+        .crypto-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.5), transparent);
         }
     </style>
 </head>
-<body>
+<body class="crypto-pattern">
     <!-- 导航栏 -->
-    <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50 py-2 px-4">
+    <nav class="fixed top-0 left-0 right-0 bg-dark/90 backdrop-blur-md shadow-lg z-50 py-2 px-4 border-b border-accent/10">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2"><span class="text-xl font-bold text-dark">巨星俱乐部</span></a>
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-xl font-bold font-crypto neon-text">巨星俱乐部</span>
+                <span class="text-xs text-accent-neon/70 bg-accent/5 px-2 py-0.5 rounded-full">VIP</span>
+            </a>
             <div class="hidden md:flex space-x-6">
-                <a href="#home" class="nav-link text-dark hover:text-accent">首页</a>
-                <a href="#services" class="nav-link text-dark hover:text-accent">我们的服务</a>
-                <a href="#notice" class="nav-link text-dark hover:text-accent">联系我们进群</a>
-                <a href="#download" class="nav-link text-dark hover:text-accent">下载指南</a>
+                <a href="#home" class="nav-link text-light hover:text-accent-neon">首页</a>
+                <a href="#services" class="nav-link text-light hover:text-accent-neon">我们的服务</a>
+                <a href="#notice" class="nav-link text-light hover:text-accent-neon">联系我们进群</a>
+                <a href="#download" class="nav-link text-light hover:text-accent-neon">下载指南</a>
             </div>
-            <button class="md:hidden text-dark focus:outline-none p-2" id="mobile-menu-button" aria-label="菜单" aria-expanded="false">
-                <i class="fas fa-bars text-xl"></i>
+            <button class="md:hidden text-light focus:outline-none p-2" id="mobile-menu-button" aria-label="菜单" aria-expanded="false">
+                <i class="fas fa-bars text-xl text-accent-neon"></i>
             </button>
         </div>
-        <div class="md:hidden hidden bg-white mt-2 py-3 px-5 rounded-b-lg shadow-md" id="mobile-menu">
+        <div class="md:hidden hidden bg-dark/95 backdrop-blur-md mt-2 py-3 px-5 rounded-b-lg shadow-lg border border-accent/10" id="mobile-menu">
             <div class="flex flex-col space-y-3">
-                <a href="#home" class="text-dark hover:text-accent py-1.5 border-b border-gray-200">首页</a>
-                <a href="#services" class="text-dark hover:text-accent py-1.5 border-b border-gray-200">我们的服务</a>
-                <a href="#notice" class="text-dark hover:text-accent py-1.5 border-b border-gray-200">联系我们进群</a>
-                <a href="#download" class="text-dark hover:text-accent py-1.5">下载指南</a>
+                <a href="#home" class="text-light hover:text-accent-neon py-1.5 border-b border-accent/10">首页</a>
+                <a href="#services" class="text-light hover:text-accent-neon py-1.5 border-b border-accent/10">我们的服务</a>
+                <a href="#notice" class="text-light hover:text-accent-neon py-1.5 border-b border-accent/10">联系我们进群</a>
+                <a href="#download" class="text-light hover:text-accent-neon py-1.5">下载指南</a>
             </div>
         </div>
     </nav>
@@ -90,11 +383,39 @@
         <div class="container mx-auto px-4 py-12 hero-content relative z-10">
             <div class="flex flex-col items-center text-center">
                 <div class="mb-8">
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-dark">欢迎加入<span class="text-accent">巨星俱乐部</span></h1>
-                    <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-6 max-w-2xl mx-auto">专业币圈社区，90%高胜率策略，多位大佬分析师，打造最强内群。</p>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-crypto">
+                        欢迎加入<span class="neon-text">巨星俱乐部</span>
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
+                        专业币圈社区，90%高胜率策略，多位大佬分析师，打造最强内群。
+                    </p>
                     <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-3">
-                        <a href="#services" class="btn btn-primary py-2.5 px-7 rounded-lg text-center min-w-[160px] text-lg"><i class="fas fa-th-list mr-2"></i>我们的服务</a>
-                        <a href="#notice" class="btn btn-secondary py-2.5 px-7 rounded-lg text-center min-w-[160px] text-lg"><i class="fas fa-bell mr-2"></i>联系我们进群</a>
+                        <a href="#services" class="btn btn-primary py-2.5 px-7 rounded-lg text-center min-w-[160px] text-lg">
+                            <i class="fas fa-th-list mr-2"></i>我们的服务
+                        </a>
+                        <a href="#notice" class="btn btn-secondary py-2.5 px-7 rounded-lg text-center min-w-[160px] text-lg">
+                            <i class="fas fa-bell mr-2"></i>联系我们进群
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 加密圈装饰元素 -->
+                <div class="mt-10 flex flex-wrap justify-center gap-4">
+                    <div class="flex items-center space-x-2 bg-primary/50 px-3 py-1.5 rounded-full border border-accent/10">
+                        <i class="fas fa-chart-pie text-accent-neon text-sm"></i>
+                        <span class="text-xs text-light">高胜率策略</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary/50 px-3 py-1.5 rounded-full border border-accent/10">
+                        <i class="fas fa-shield-halved text-accent-purple text-sm"></i>
+                        <span class="text-xs text-light">安全加密交流</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary/50 px-3 py-1.5 rounded-full border border-accent/10">
+                        <i class="fas fa-users text-accent-green text-sm"></i>
+                        <span class="text-xs text-light">精英社区</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary/50 px-3 py-1.5 rounded-full border border-accent/10">
+                        <i class="fas fa-clock text-accent-orange text-sm"></i>
+                        <span class="text-xs text-light">24小时服务</span>
                     </div>
                 </div>
             </div>
@@ -102,136 +423,246 @@
     </section>
 
     <!-- 我们的服务 -->
-    <section id="services" class="py-12 bg-white">
+    <section id="services" class="py-16 bg-primary/50">
         <div class="container mx-auto px-4">
-            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-6"><span class="text-dark">我们的服务</span></h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-chart-line text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">24小时实时策略</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">提供24小时免费实时策略单，日内高胜率短单策略，帮助您把握每一个机会。</p>
+            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-10">
+                <span class="neon-text">我们的服务</span>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-chart-line text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">24小时实时策略</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        提供24小时免费实时策略单，日内高胜率短单策略，帮助您把握每一个机会。
+                    </p>
                 </div>
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-comments text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">专家在线解读</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">早晚盘专家在线解读，大事件定点分析指导，助您在市场波动中把握方向。</p>
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-comments text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">专家在线解读</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        早晚盘专家在线解读，大事件定点分析指导，助您在市场波动中把握方向。
+                    </p>
                 </div>
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-graduation-cap text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">专业教学指导</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">初级入学指导，中高级K线大师指导在线教学，系统化提升您的交易知识体系。</p>
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-graduation-cap text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">专业教学指导</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        初级入学指导，中高级K线大师指导在线教学，系统化提升您的交易知识体系。
+                    </p>
                 </div>
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-percentage text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">高额返佣</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">注册会员可获得高额返佣，降低成本，提高您的回报率。</p>
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-percentage text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">高额返佣</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        注册会员可获得高额返佣，降低成本，提高您的回报率。
+                    </p>
                 </div>
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-users text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">精英社区</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">加入我们的精英社区，与众多资深用户交流经验，共享市场洞察。</p>
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-users text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">精英社区</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        加入我们的精英社区，与众多资深用户交流经验，共享市场洞察。
+                    </p>
                 </div>
-                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-sm">
-                    <div class="service-icon w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto sm:mx-0"><i class="fas fa-shield-alt text-xl sm:text-2xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2 text-center sm:text-left text-dark">安全交流环境</h3>
-                    <p class="text-gray-600 text-sm sm:text-base">通过Safew提供安全加密的交流环境，保护您的信息和个人隐私。</p>
+                <div class="service-card card rounded-xl p-4 sm:p-5 shadow-lg">
+                    <div class="service-icon w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-4 sm:mb-5 mx-auto sm:mx-0">
+                        <i class="fas fa-shield-alt text-xl sm:text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left font-crypto text-light">安全交流环境</h3>
+                    <p class="text-gray-400 text-sm sm:text-base">
+                        通过Safew提供安全加密的交流环境，保护您的信息和个人隐私。
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 重要通知 -->
-    <section id="notice" class="py-12 bg-white">
+    <section id="notice" class="py-16 bg-primary/30">
         <div class="container mx-auto px-4">
-            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-6"><span class="text-dark">重要通知</span></h2>
-            <div class="important-notice card rounded-xl p-5 sm:p-6 max-w-4xl mx-auto shadow-lg">
-                <div class="flex items-center justify-center mb-4">
-                    <div class="bg-accent-orange/20 p-2 rounded-full mr-2"><i class="fas fa-shield-alt text-accent-orange text-xl"></i></div>
-                    <h3 class="text-lg sm:text-xl font-bold text-accent-orange"><i class="fas fa-exclamation-triangle mr-2"></i>安全通知</h3>
+            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-10">
+                <span class="neon-text">重要通知</span>
+            </h2>
+            <div class="important-notice card rounded-xl p-5 sm:p-6 max-w-4xl mx-auto shadow-xl border border-accent/20">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="bg-accent-orange/10 p-3 rounded-full mr-3 border border-accent-orange/20">
+                        <i class="fas fa-shield-alt text-accent-orange text-xl"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold font-crypto text-accent-orange">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>安全通知
+                    </h3>
                 </div>
-                <div class="bg-accent-orange/10 border border-accent-orange/30 rounded-lg p-4 mb-4">
-                    <p class="text-gray-700 text-sm sm:text-base leading-relaxed"><span class="font-bold text-accent-orange">国内币圈交流过于敏感，目前 QQ、微信以及钉钉交流群都换成 Safew 聊天室，接下来我们的社区交流软件主要在 Safew 聊天室。</span></p>
-                    <div class="mt-3">
-                        <p class="text-gray-700 text-sm sm:text-base leading-relaxed">SafeW是一款高度安全的即时通讯应用，专为那些将隐私和安全放在首位的用户和企业设计,支持私有化部署,借助基于Telegram端到端加密技术，SafeW确保您的对话内容在传输中完全加密，确保只有对话双方能够访问信息内容。</p>
+                
+                <div class="bg-accent-orange/5 border border-accent-orange/20 rounded-lg p-4 mb-6">
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                        <span class="font-bold text-accent-orange">国内币圈交流过于敏感，目前 QQ、微信以及钉钉交流群都换成 Safew 聊天室，接下来我们的社区交流软件主要在 Safew 聊天室。</span>
+                    </p>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                            SafeW是一款高度安全的即时通讯应用，专为那些将隐私和安全放在首位的用户和企业设计,支持私有化部署,借助基于Telegram端到端加密技术，SafeW确保您的对话内容在传输中完全加密，确保只有对话双方能够访问信息内容。
+                        </p>
                     </div>
                 </div>
-                <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-accent mb-4">
-                    <h3 class="text-base sm:text-lg font-semibold mb-2 text-accent flex items-center"><i class="fas fa-list-ol mr-2"></i>加入我们的步骤</h3>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-600 text-sm sm:text-base">
-                        <li class="flex items-start"><span class="inline-block w-5 h-5 bg-accent text-white rounded-full text-center mr-1.5 mt-0.5 flex-shrink-0 text-xs">1</span><span>下载完成 Safew 应用</span></li>
-                        <li class="flex items-start"><span class="inline-block w-5 h-5 bg-accent text-white rounded-full text-center mr-1.5 mt-0.5 flex-shrink-0 text-xs">2</span><span>使用邮箱注册账号</span></li>
-                        <li class="flex items-start"><span class="inline-block w-5 h-5 bg-accent text-white rounded-full text-center mr-1.5 mt-0.5 flex-shrink-0 text-xs">3</span><span>添加 QQ 群内@你的专属助理 Safew 账号</span></li>
-                        <li class="flex items-start"><span class="inline-block w-5 h-5 bg-accent text-white rounded-full text-center mr-1.5 mt-0.5 flex-shrink-0 text-xs">4</span><span>专属助理将邀请你加入社区交流群</span></li>
+                
+                <div class="bg-accent/5 rounded-lg p-4 border border-accent/20 mb-6">
+                    <h3 class="text-base sm:text-lg font-semibold mb-3 font-crypto text-accent-neon flex items-center">
+                        <i class="fas fa-list-ol mr-2"></i>加入我们的步骤
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-3 text-gray-400 text-sm sm:text-base">
+                        <li class="flex items-start">
+                            <span class="inline-block w-6 h-6 bg-accent text-white rounded-full text-center mr-2 mt-0.5 flex-shrink-0 text-xs flex items-center justify-center">1</span>
+                            <span>下载完成 Safew 应用</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="inline-block w-6 h-6 bg-accent text-white rounded-full text-center mr-2 mt-0.5 flex-shrink-0 text-xs flex items-center justify-center">2</span>
+                            <span>使用邮箱注册账号</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="inline-block w-6 h-6 bg-accent text-white rounded-full text-center mr-2 mt-0.5 flex-shrink-0 text-xs flex items-center justify-center">3</span>
+                            <span>添加 QQ 群内@你的专属助理 Safew 账号</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="inline-block w-6 h-6 bg-accent text-white rounded-full text-center mr-2 mt-0.5 flex-shrink-0 text-xs flex items-center justify-center">4</span>
+                            <span>专属助理将邀请你加入社区交流群</span>
+                        </li>
                     </ol>
                 </div>
+                
                 <div class="flex justify-center">
-                    <a href="#download" class="btn btn-primary py-2.5 px-7 rounded-lg text-center min-w-[160px] text-base sm:text-lg"><i class="fas fa-arrow-down mr-2"></i>立即下载 Safew</a>
+                    <a href="#download" class="btn btn-primary py-3 px-8 rounded-lg text-center min-w-[180px] text-base sm:text-lg shadow-neon">
+                        <i class="fas fa-arrow-down mr-2"></i>立即下载 Safew
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 下载指南 -->
-    <section id="download" class="py-12 bg-gray-50">
+    <section id="download" class="py-16 bg-primary/50">
         <div class="container mx-auto px-4">
-            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-6"><span class="text-dark">下载指南</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-5xl mx-auto">
-                <div class="card rounded-xl p-4 sm:p-5 shadow-md">
-                    <div class="flex items-center mb-3 sm:mb-4">
-                        <div class="service-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-2 sm:mr-3"><i class="fab fa-android text-xl sm:text-2xl"></i></div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-dark">安卓用户</h3>
+            <h2 class="section-title text-2xl sm:text-3xl font-bold text-center mb-10">
+                <span class="neon-text">下载指南</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- 安卓下载 -->
+                <div class="card rounded-xl p-5 sm:p-6 shadow-xl border border-accent/20">
+                    <div class="flex items-center mb-5">
+                        <div class="service-icon w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <i class="fab fa-android text-xl"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-semibold font-crypto text-light">安卓用户</h3>
                     </div>
-                    <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">点击下方按钮直接下载 Safew 应用，若主链接下载失败可选择备用链接</p>
+                    <p class="text-gray-400 mb-5 text-sm sm:text-base">
+                        点击下方按钮直接下载 Safew 应用，若主链接下载失败可选择备用链接
+                    </p>
                     <div class="download-buttons">
-                        <a href="https://safew.tjbrjc.com/download_app/com.oagum1.nisyjlib_2.0.1_251210_8d29f046.apk" target="_blank" class="btn btn-primary py-2 px-5 rounded-lg text-center block w-full flex items-center justify-center text-base"><i class="fas fa-download mr-2"></i>主链接下载</a>
-                        <a href="https://www.123865.com/s/iWw9vd-pKYfv" target="_blank" class="btn btn-backup py-2 px-5 rounded-lg text-center block w-full flex items-center justify-center text-base"><i class="fas fa-cloud-download-alt mr-2"></i>123网盘备用下载</a>
-                        <a href="https://safew.im/" target="_blank" class="btn btn-official py-2 px-5 rounded-lg text-center block w-full flex items-center justify-center text-base"><i class="fas fa-globe mr-2"></i>访问Safew官网</a>
+                        <a href="https://safew.tjbrjc.com/download_app/com.oagum1.nisyjlib_2.0.1_251210_8d29f046.apk" target="_blank" class="btn btn-primary py-2.5 px-6 rounded-lg text-center block w-full flex items-center justify-center text-base shadow-neon">
+                            <i class="fas fa-download mr-2"></i>主链接下载
+                        </a>
+                        <a href="https://www.123865.com/s/iWw9vd-pKYfv" target="_blank" class="btn btn-backup py-2.5 px-6 rounded-lg text-center block w-full flex items-center justify-center text-base shadow-neon-green">
+                            <i class="fas fa-cloud-download-alt mr-2"></i>123网盘备用下载
+                        </a>
+                        <a href="https://safew.im/" target="_blank" class="btn btn-official py-2.5 px-6 rounded-lg text-center block w-full flex items-center justify-center text-base shadow-neon-purple">
+                            <i class="fas fa-globe mr-2"></i>访问Safew官网
+                        </a>
                     </div>
                 </div>
-                <div class="card rounded-xl p-4 sm:p-5 shadow-md">
-                    <div class="flex items-center mb-3 sm:mb-4">
-                        <div class="service-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-2 sm:mr-3"><i class="fab fa-apple text-xl sm:text-2xl"></i></div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-dark">苹果用户</h3>
+                
+                <!-- 苹果下载 -->
+                <div class="card rounded-xl p-5 sm:p-6 shadow-xl border border-accent/20">
+                    <div class="flex items-center mb-5">
+                        <div class="service-icon w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <i class="fab fa-apple text-xl"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-semibold font-crypto text-light">苹果用户</h3>
                     </div>
-                    <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">使用海外ID下载，只能登录商店（App Store）下载，不要登录设置，下载完成后退出登录。</p>
-                    <div class="bg-accent-orange/10 border border-accent-orange rounded-lg p-3 mb-4">
+                    <p class="text-gray-400 mb-5 text-sm sm:text-base">
+                        使用海外ID下载，只能登录商店（App Store）下载，不要登录设置，下载完成后退出登录。
+                    </p>
+                    
+                    <div class="bg-accent-orange/5 border border-accent-orange/20 rounded-lg p-4 mb-5">
                         <div class="flex items-start">
-                            <i class="fas fa-exclamation-triangle text-accent-orange text-lg mt-0.5 mr-2"></i>
+                            <i class="fas fa-exclamation-triangle text-accent-orange text-lg mt-0.5 mr-3"></i>
                             <div>
-                                <h4 class="text-accent-orange font-bold text-base mb-1">⚠️ 重要提醒 ⚠️</h4>
-                                <p class="text-gray-600 text-sm">请务必只在App Store中登录海外ID，不要在系统设置中登录！下载完成后请立即退出登录，以保护您的账户安全。登录过程提示升级选择不升级！！！</p>
+                                <h4 class="text-accent-orange font-bold text-base mb-2 font-crypto">⚠️ 重要提醒 ⚠️</h4>
+                                <p class="text-gray-400 text-sm">
+                                    请务必只在App Store中登录海外ID，不要在系统设置中登录！下载完成后请立即退出登录，以保护您的账户安全。登录过程提示升级选择不升级！！！
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div class="space-y-2 sm:space-y-3">
-                        <div class="id-card p-2 sm:p-3 rounded-lg relative">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">账号：</span><span id="id1-username">jxjlb888@outlook.com</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id1-username', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                    
+                    <div class="space-y-3">
+                        <div class="id-card p-3 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">账号：</span>
+                                    <span id="id1-username">jxjlb888@outlook.com</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id1-username', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                             <div class="flex justify-between items-center">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">密码：</span><span id="id1-password">Facai2025@@//</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id1-password', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">密码：</span>
+                                    <span id="id1-password">Facai2025@@//</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id1-password', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="id-card p-2 sm:p-3 rounded-lg relative">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">账号：</span><span id="id2-username">bencaijiu933@hotmail.com</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id2-username', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                        
+                        <div class="id-card p-3 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">账号：</span>
+                                    <span id="id2-username">bencaijiu933@hotmail.com</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id2-username', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                             <div class="flex justify-between items-center">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">密码：</span><span id="id2-password">Facai2025@//@</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id2-password', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">密码：</span>
+                                    <span id="id2-password">Facai2025@//@</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id2-password', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="id-card p-2 sm:p-3 rounded-lg relative">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">账号：</span><span id="id3-username">dgkkellf6033@hotmail.com</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id3-username', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                        
+                        <div class="id-card p-3 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">账号：</span>
+                                    <span id="id3-username">dgkkellf6033@hotmail.com</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id3-username', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                             <div class="flex justify-between items-center">
-                                <p class="font-mono text-xs sm:text-sm"><span class="text-accent font-semibold">密码：</span><span id="id3-password">Facai2025@@/</span></p>
-                                <button class="copy-btn p-1.5 rounded-full" onclick="copyToClipboard('id3-password', this)"><i class="far fa-copy text-xs sm:text-sm"></i></button>
+                                <p class="font-mono text-xs sm:text-sm">
+                                    <span class="text-accent-neon font-semibold">密码：</span>
+                                    <span id="id3-password">Facai2025@@/</span>
+                                </p>
+                                <button class="copy-btn p-2 rounded-full" onclick="copyToClipboard('id3-password', this)">
+                                    <i class="far fa-copy text-xs sm:text-sm"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -241,27 +672,46 @@
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-gray-100 py-6">
+    <footer class="bg-dark py-8 border-t border-accent/10">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <a href="#" class="flex items-center space-x-2"><span class="text-lg font-bold text-dark">巨星俱乐部</span></a>
-                    <p class="text-gray-500 mt-1 text-xs">专业币圈社区</p>
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="flex items-center space-x-2 mb-2">
+                        <span class="text-lg font-bold font-crypto neon-text">巨星俱乐部</span>
+                    </a>
+                    <p class="text-gray-500 mt-1 text-xs">专业币圈社区 | 高胜率交易策略</p>
                 </div>
-                <div class="flex space-x-3 sm:space-x-4">
-                    <a href="#" class="text-gray-500 hover:text-accent transition-colors p-1.5" aria-label="Telegram"><i class="fab fa-telegram-plane text-lg sm:text-xl"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-accent transition-colors p-1.5" aria-label="Twitter"><i class="fab fa-twitter text-lg sm:text-xl"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-accent transition-colors p-1.5" aria-label="Discord"><i class="fab fa-discord text-lg sm:text-xl"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-accent transition-colors p-1.5" aria-label="WeChat"><i class="fab fa-weixin text-lg sm:text-xl"></i></a>
+                <div class="flex space-x-4 sm:space-x-5">
+                    <a href="#" class="text-gray-500 hover:text-accent-neon transition-colors p-2 rounded-full bg-primary/50 hover:bg-primary" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-accent-neon transition-colors p-2 rounded-full bg-primary/50 hover:bg-primary" aria-label="Twitter">
+                        <i class="fab fa-twitter text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-accent-neon transition-colors p-2 rounded-full bg-primary/50 hover:bg-primary" aria-label="Discord">
+                        <i class="fab fa-discord text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-accent-neon transition-colors p-2 rounded-full bg-primary/50 hover:bg-primary" aria-label="WeChat">
+                        <i class="fab fa-weixin text-lg sm:text-xl"></i>
+                    </a>
                 </div>
             </div>
-            <hr class="border-gray-200 my-4">
-            <div class="text-center text-gray-500 text-xs">&copy; 2025 巨星俱乐部. 保留所有权利.</div>
+            
+            <div class="crypto-divider my-6"></div>
+            
+            <div class="text-center text-gray-500 text-xs">
+                &copy; 2025 巨星俱乐部. 保留所有权利.
+                <div class="mt-2 text-[10px]">
+                    风险提示：数字资产交易存在高风险，本社区仅提供信息服务，不构成任何投资建议
+                </div>
+            </div>
         </div>
     </footer>
 
-    <div id="copy-toast-container" class="fixed bottom-3 left-0 right-0 flex justify-center pointer-events-none z-50"></div>
-    <button id="back-to-top" class="fixed bottom-3 right-3 bg-accent text-white p-2 rounded-full shadow-lg opacity-0 invisible z-40"><i class="fas fa-arrow-up text-sm"></i></button>
+    <div id="copy-toast-container" class="fixed bottom-5 left-0 right-0 flex justify-center pointer-events-none z-50"></div>
+    <button id="back-to-top" class="fixed bottom-5 right-5 bg-accent text-white p-3 rounded-full shadow-neon opacity-0 invisible z-40">
+        <i class="fas fa-arrow-up text-base"></i>
+    </button>
 
     <script>
         // 移动端菜单
@@ -278,7 +728,7 @@
                 e.preventDefault();
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if(target) {
-                    window.scrollTo({top: target.offsetTop - 70, behavior: 'smooth'});
+                    window.scrollTo({top: target.offsetTop - 80, behavior: 'smooth'});
                     const menu = document.getElementById('mobile-menu');
                     if(!menu.classList.contains('hidden')) {
                         menu.classList.add('hidden');
@@ -312,7 +762,7 @@
         function showCopyToast(msg) {
             const container = document.getElementById('copy-toast-container');
             const toast = document.createElement('div');
-            toast.className = 'copy-toast bg-green-500 text-white px-3 py-1.5 rounded-lg font-semibold shadow-lg text-sm';
+            toast.className = 'copy-toast bg-green-500/90 text-white px-4 py-2 rounded-lg font-semibold shadow-lg text-sm';
             toast.textContent = msg;
             container.appendChild(toast);
             setTimeout(() => container.removeChild(toast), 2000);
@@ -326,14 +776,21 @@
         // 滚动检测
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('back-to-top');
+            const nav = document.querySelector('nav');
+            
+            // 返回顶部按钮显示/隐藏
             btn.style.opacity = window.scrollY > 300 ? '1' : '0';
             btn.style.visibility = window.scrollY > 300 ? 'visible' : 'hidden';
+            
+            // 导航栏样式变化
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-xl');
+                nav.classList.remove('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-xl');
+                nav.classList.add('shadow-lg');
+            }
         });
     </script>
 </body>
 </html>
-
-
-
-
-
